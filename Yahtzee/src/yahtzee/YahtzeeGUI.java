@@ -214,7 +214,8 @@ class YahtzeeGUI extends JFrame{
        
     }
     public boolean confirmation(){
-         int answer = JOptionPane.showConfirmDialog(new JFrame(), "are you sure");
+        JOptionPane optionPane = new JOptionPane("Option Pane");
+         int answer = optionPane.showConfirmDialog(this, "are you sure");
             if (answer == JOptionPane.YES_OPTION) {
               return true;
             } else if (answer == JOptionPane.NO_OPTION) {
