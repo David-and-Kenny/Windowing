@@ -20,6 +20,7 @@ public class Yahtzee {
      // Game newGame= new Game();
       Game game= new Game();
           System.out.println("please ohfsdft this worwerwerwerk");
+          System.out.println("ermagherd");
     }
 
     }
