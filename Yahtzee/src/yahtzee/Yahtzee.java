@@ -19,7 +19,7 @@ public class Yahtzee {
     public static void main(String[] args) {
      // Game newGame= new Game();
       Game game= new Game();
-          System.out.println("please oh god lesdlkjlkfsdft this worwerwerwerk");
+          System.out.println("please ohfsdft this worwerwerwerk");
     }
 
     }
