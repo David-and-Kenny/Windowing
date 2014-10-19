@@ -145,12 +145,14 @@ class YahtzeeGUI extends JFrame{
                 JTable target = (JTable)e.getSource();
                 int row = target.getSelectedRow();
                 int column = target.getSelectedColumn();
+                if(row>0&&column>0){
                 boolean a=confirmation();
                 if(a){
                     game.getCellArray()[row-1][column-1]=true;
                     scorecard.getSelectionModel().clearSelection();
                     scorecard.repaint();
                     game.clearTable();
+                    game.resetRolls();
                     if(game.getP1Turn()){
                         p2Turn(game);
                     }else{
@@ -158,7 +160,7 @@ class YahtzeeGUI extends JFrame{
                     }
                 }
                 else System.out.println(false);
-              }
+              }}
             }
           });
         reroll.addActionListener(roll);

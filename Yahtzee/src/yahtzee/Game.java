@@ -92,7 +92,8 @@ class Game {
         int column= (p1Turn)? 1 : 2;
         //Score Singles
         for(int index=1;index<7;index++){
-            gui.getTable().setValueAt((index*numCount[index]), index, column);
+            if(selectedCells[index-1][column-1]!=true){
+            gui.getTable().setValueAt((index*numCount[index]), index, column);}
         }
       //3 of  akind
         {
