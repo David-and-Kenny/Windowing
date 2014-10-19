@@ -43,7 +43,7 @@ public class RollOverTable extends JTable {
         
         else if((row == rollOverRowIndex)||
             (column == rollOverColumnIndex)){
-                c.setForeground(getSelectionForeground());
+                c.setForeground(Color.GRAY);
                 c.setBackground(tableColor);
             if((row == rollOverRowIndex)&&
             (column == rollOverColumnIndex)){
@@ -65,6 +65,9 @@ public class RollOverTable extends JTable {
           if(game.getCellArray()[row-1][column-1]==true){
             c.setForeground(Color.BLACK);
         }  
+        }
+        if(row==0 || column ==0){
+            c.setForeground(Color.BLACK);
         }
         
         return c;
