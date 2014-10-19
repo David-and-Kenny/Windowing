@@ -16,6 +16,7 @@ import javax.swing.JFrame;
  * @author DavidPC
  */
 class Game {
+    private boolean [][] selectedCells=new boolean[16][2];
     private int rollsLeft=3;
     //private boolean GameOver=false;
     private int dice[]={1,2,3,4,5};
@@ -35,6 +36,14 @@ class Game {
     public int[] getDice(){
         return this.dice;
     }
+    public void clearTable(){
+        int column= (p1Turn)? 1 : 2;
+        for(int i=0;i<16;i++){
+            if(selectedCells[i][column-1]!=true){
+                gui.getTable().setValueAt("",i+1,column);
+            }
+        }
+    }
     public void randomDice(){
        boolean arr[]={this.gui.get1().isSelected(),
                       this.gui.get2().isSelected(),
@@ -47,7 +56,9 @@ class Game {
             this.dice[i]=a;}
          }
     }
-    
+    public boolean[][] getCellArray(){
+        return this.selectedCells;
+    }
     public void minusRoll(){
         this.rollsLeft--;
         this.gui.setRollInfo("Rolls Remaining: "+rollsLeft);

@@ -18,6 +18,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -103,7 +105,7 @@ class YahtzeeGUI extends JFrame{
                                 { "YAHTZEE", "", ""},
                                 { "TOTAL", "", ""},},
       new Object[]{ "", "", ""});
-        scorecard= new RollOverTable(model);
+        scorecard= new RollOverTable(model,game);
         scorecard.setSize(200,500);
         scorecard.setRowHeight(20);
         scorecard.getColumnModel().getColumn(1).setPreferredWidth(40);
@@ -137,6 +139,28 @@ class YahtzeeGUI extends JFrame{
             }
             }
         };
+        scorecard.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+              if (e.getClickCount() == 1) {
+                JTable target = (JTable)e.getSource();
+                int row = target.getSelectedRow();
+                int column = target.getSelectedColumn();
+                boolean a=confirmation();
+                if(a){
+                    game.getCellArray()[row-1][column-1]=true;
+                    scorecard.getSelectionModel().clearSelection();
+                    scorecard.repaint();
+                    game.clearTable();
+                    if(game.getP1Turn()){
+                        p2Turn(game);
+                    }else{
+                        p1Turn(game);
+                    }
+                }
+                else System.out.println(false);
+              }
+            }
+          });
         reroll.addActionListener(roll);
         endTurn.addActionListener(end);
         buttonPanel.add(endTurn);
@@ -186,6 +210,15 @@ class YahtzeeGUI extends JFrame{
             default:break;
         }
        
+    }
+    public boolean confirmation(){
+         int answer = JOptionPane.showConfirmDialog(new JFrame(), "are you sure");
+            if (answer == JOptionPane.YES_OPTION) {
+              return true;
+            } else if (answer == JOptionPane.NO_OPTION) {
+              return false;
+            }
+    return false;
     }
     public void setRollInfo(String str){
          this.rollInfo.setText(str);
