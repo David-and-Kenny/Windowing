@@ -22,6 +22,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 /**
  *
@@ -104,6 +105,10 @@ class YahtzeeGUI extends JFrame{
                                 { "TOTAL", "", ""},},
       new Object[]{ "", "", ""});
         scorecard= new RollOverTable(model,game);
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+        scorecard.getColumnModel().getColumn(1).setCellRenderer( centerRenderer );
+        scorecard.getColumnModel().getColumn(2).setCellRenderer( centerRenderer );
         scorecard.setSize(200,500);
         scorecard.setRowHeight(20);
         scorecard.getColumnModel().getColumn(1).setPreferredWidth(40);
@@ -130,6 +135,7 @@ class YahtzeeGUI extends JFrame{
         ActionListener end= new ActionListener(){
             public void actionPerformed(ActionEvent e){
             game.resetRolls();
+            game.clearTable();
             if(game.getP1Turn()){
                 p2Turn(game);
             }else{

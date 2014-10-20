@@ -83,7 +83,7 @@ class Game {
         int column= (p1Turn)? 1 : 2;
         //Score Singles
         for(int index=1;index<7;index++){
-            if(selectedCells[index-1][column-1]!=true){
+            if(selectedCells[index-1][column-1]!=true&&numCount[index]!=0){
             gui.getTable().setValueAt((index*numCount[index]), index, column);}
         }
       //3 of  akind
@@ -98,7 +98,7 @@ class Game {
 	  	count = count + (i * numCount[i]);
                 }
 	
-          gui.getTable().setValueAt(count, 9, column);
+          if(count!=0)gui.getTable().setValueAt(count, 9, column);
         }
         //4of a kind
         {
@@ -112,7 +112,7 @@ class Game {
 	  	count = count + (i * numCount[i]);
                 }
 	
-          gui.getTable().setValueAt(count, 10, column);
+          if(count!=0)gui.getTable().setValueAt(count, 10, column);
         }
         //Full House
         {
@@ -134,7 +134,7 @@ class Game {
                     score=25;
 		
 	}
-        gui.getTable().setValueAt(score, 11, column);  
+        if(score!=0)gui.getTable().setValueAt(score, 11, column);  
          }
     
     
