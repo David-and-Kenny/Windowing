@@ -7,9 +7,6 @@
 package yahtzee;
 
 import java.awt.Dimension;
-import java.util.ArrayList;
-import java.util.Arrays;
-import javax.swing.JFrame;
 
 /**
  *
