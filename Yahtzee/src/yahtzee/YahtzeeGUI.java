@@ -143,7 +143,7 @@ class YahtzeeGUI extends JFrame{
                 JTable target = (JTable)e.getSource();
                 int row = target.getSelectedRow();
                 int column = target.getSelectedColumn();
-                if(row>0&&column>0){
+                if(row>0&&column>0&&scorecard.getValueAt(row, column)!=""){
                 boolean a=confirmation();
                 if(a){
                     game.getCellArray()[row-1][column-1]=true;
@@ -274,15 +274,13 @@ class YahtzeeGUI extends JFrame{
     public void p1Turn(Game g){
         g.setP1Turn(true);
         unselectAll();
-        rollDice(g);
-        g.populateTable();
+        scrambleDice(g);
         playerInfo.setText("Player 1's turn");
     }//signals the start of player 2's turn
     public void p2Turn(Game g){
       g.setP1Turn(false); 
       unselectAll();
-      rollDice(g);
-      g.populateTable();
+      scrambleDice(g);
         playerInfo.setText("Player 2's turn");
     }//used to return all dice to unhighlighted when users turn is over
     private void unselectAll(){
