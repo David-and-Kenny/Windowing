@@ -17,7 +17,6 @@ public class Yahtzee {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-     // Game newGame= new Game();
       Game game= new Game();
           System.out.println("please ohfsdft this worwerwerwerk");
           System.out.println("ermaghelkjhlkjlkjkjlrd");

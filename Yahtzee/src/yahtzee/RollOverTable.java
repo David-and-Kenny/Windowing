@@ -14,12 +14,17 @@ import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
 import javax.swing.table.*;
 
+/*Basically just overwritting the default table renderer so
+we can do cool stuff like highlighting certain rows/columns and
+change text properties based on other outside factors.
+*/
+
 public class RollOverTable extends JTable {
     private Game game;
     private int rollOverRowIndex = -1;
     private int rollOverColumnIndex = -1;
     private Color tableColor = new Color(159, 252, 249);
-    
+    //Overrides JTable initializer with our new one
     public RollOverTable(TableModel model, Game g) {
         super(model);
         this.game=g;
@@ -27,12 +32,14 @@ public class RollOverTable extends JTable {
         addMouseMotionListener(lst);
         addMouseListener(lst);
     }
-    @Override
+    @Override // makes it where user cant type stuff in
     public boolean isCellEditable(int row, int column) {
        //all cells false
        return false;
     }
-    
+    //This is what is actually rendering the table.
+    //It renders each cell individually so the logic inside tells how to
+    //format the cells
     public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
         Component c = super.prepareRenderer(renderer, row, column);
        
@@ -73,7 +80,7 @@ public class RollOverTable extends JTable {
         return c;
     }
     
-
+    //Rerenders the table every time the mouse is moved on the table
     private class RollOverListener extends MouseInputAdapter {
 
         public void mouseExited(MouseEvent e) {

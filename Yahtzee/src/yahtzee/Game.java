@@ -18,24 +18,21 @@ import javax.swing.JFrame;
 class Game {
     private boolean [][] selectedCells=new boolean[16][2];
     private int rollsLeft=3;
-    //private boolean GameOver=false;
     private int dice[]={1,2,3,4,5};
-   private boolean p1Turn;
-   private boolean p2Turn;
+   private boolean p1Turn;//keeps track of whose turn it is
    private boolean scoreSelected=false;
     YahtzeeGUI gui;
     public Game(){
     gui= new YahtzeeGUI(this);
       gui.setMinimumSize(new Dimension(425, 650));
       gui.setVisible(true);
-      gui.rollDice(this);
+      gui.rollDice(this);//initial dice roll
      p1Turn=true;
-     p2Turn=false;
     
-}
+}   //returns the dice array
     public int[] getDice(){
         return this.dice;
-    }
+    }//clears cells that arent "set" after a turn is over
     public void clearTable(){
         int column= (p1Turn)? 1 : 2;
         for(int i=0;i<16;i++){
@@ -43,7 +40,7 @@ class Game {
                 gui.getTable().setValueAt("",i+1,column);
             }
         }
-    }
+    }//rolls the dice
     public void randomDice(){
        boolean arr[]={this.gui.get1().isSelected(),
                       this.gui.get2().isSelected(),
@@ -55,18 +52,18 @@ class Game {
             int a=(int)((Math.random() * 6) + 1);
             this.dice[i]=a;}
          }
-    }
+    }//returns the boolean 2d array; used in gui and table renderer
     public boolean[][] getCellArray(){
         return this.selectedCells;
-    }
+    }//decrement roll
     public void minusRoll(){
         this.rollsLeft--;
         this.gui.setRollInfo("Rolls Remaining: "+rollsLeft);
-    }
+    }//resets the roll count to 3
     public void resetRolls(){
         this.rollsLeft=3;
         this.gui.setRollInfo("Rolls Remaining: 3");
-    }
+    }//checks if user had any rolls left
     public boolean getRolls(){
         if(this.rollsLeft==0){
             return false;
@@ -75,15 +72,9 @@ class Game {
    public void setP1Turn(boolean a){
         this.p1Turn=a;
     }
-    public void setP2Turn(boolean a){
-        this.p2Turn=a;
-    }
     public boolean getP1Turn(){
         return this.p1Turn;
-    }
-    public boolean getP2Turn(){
-        return this.p2Turn;
-    }
+    }//populates the scorecard with possible values that the user can choose
     public void populateTable(){
         int numCount[]={0,0,0,0,0,0,0};
         for(int i=0;i<5;i++){

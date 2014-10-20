@@ -69,8 +69,6 @@ class YahtzeeGUI extends JFrame{
         dicePanel.setSize(105,500);
         dicePanel.setBackground(Color.green);
         logoLabel= new JLabel(logo);
-        /* contentPane.setLayout(layout);
-         contentPane.setSize(300,600);*/
         dice1= new JIconButton();
         dice2= new JIconButton();
         dice3= new JIconButton();
@@ -120,15 +118,15 @@ class YahtzeeGUI extends JFrame{
         buttonPanel.setBackground(Color.green);
         endTurn=new JButton("End Turn");
         reroll= new JButton("Roll");
+        //activated with roll button,decreases dice count,runs scramble animation,
         ActionListener roll= new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 if(game.getRolls()){
                     game.minusRoll();
                     scrambleDice(game);
-               // rollDice(game);
-               // game.populateTable();
                }}
         };
+        //ends the users current turn, this isnt really used anymore
         ActionListener end= new ActionListener(){
             public void actionPerformed(ActionEvent e){
             game.resetRolls();
@@ -138,7 +136,7 @@ class YahtzeeGUI extends JFrame{
                 p1Turn(game);
             }
             }
-        };
+        };//allows user to select from the populated table a score which they would like to set
         scorecard.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
               if (e.getClickCount() == 1) {
@@ -184,13 +182,12 @@ class YahtzeeGUI extends JFrame{
         c.gridwidth=2;
         c.anchor = GridBagConstraints.SOUTH;
         this.add(buttonPanel,c);
-        //this.setContentPane(contentPane);
+        //This changes the icon on the dice when pressed/unpressed
          ItemListener changeColor=new ItemListener(){
                public void itemStateChanged(ItemEvent ie){
                      int state= ie.getStateChange();
                      if(state==ie.SELECTED){
                      highlight(ie);
-                        //(JToggleButton) ie.getSource().setBackground(Color.RED);
                      }else if(state==ie.DESELECTED){
                         unhighlight(ie);
                      }
@@ -200,7 +197,7 @@ class YahtzeeGUI extends JFrame{
          dice3.addItemListener(changeColor);
          dice4.addItemListener(changeColor);
          dice5.addItemListener(changeColor);
-    }
+    }//adds icon to togglebuttons
     public void paintDice(int num,JToggleButton b){
         switch(num){
             case 1:b.setIcon(d1);break;
@@ -212,7 +209,7 @@ class YahtzeeGUI extends JFrame{
             default:break;
         }
        
-    }
+    }//creates Confirmation frame when users propose a selection
     public boolean confirmation(){
         JOptionPane optionPane = new JOptionPane("Option Pane");
          int answer = optionPane.showConfirmDialog(this, "are you sure");
@@ -255,7 +252,7 @@ class YahtzeeGUI extends JFrame{
     }
     public void set5(int num){
         paintDice(num,this.dice5);
-    }
+    }//makes the dice icon red
     public void highlight(ItemEvent ie){
         JToggleButton jtb=(JToggleButton) ie.getSource();
         if(jtb.getIcon()==d1)jtb.setIcon(hd1);
@@ -264,7 +261,7 @@ class YahtzeeGUI extends JFrame{
         if(jtb.getIcon()==d4)jtb.setIcon(hd4);
         if(jtb.getIcon()==d5)jtb.setIcon(hd5);
         if(jtb.getIcon()==d6)jtb.setIcon(hd6);   
-    }
+    }//returns dice to normal color
      public void unhighlight(ItemEvent ie){
         JToggleButton jtb=(JToggleButton) ie.getSource();
         if(jtb.getIcon()==hd1)jtb.setIcon(d1);
@@ -273,28 +270,28 @@ class YahtzeeGUI extends JFrame{
         if(jtb.getIcon()==hd4)jtb.setIcon(d4);
         if(jtb.getIcon()==hd5)jtb.setIcon(d5);
         if(jtb.getIcon()==hd6)jtb.setIcon(d6);   
-    }
+    }//signals the beginning of player 1's turn
     public void p1Turn(Game g){
         g.setP1Turn(true);
         unselectAll();
         rollDice(g);
         g.populateTable();
         playerInfo.setText("Player 1's turn");
-    }
+    }//signals the start of player 2's turn
     public void p2Turn(Game g){
       g.setP1Turn(false); 
       unselectAll();
       rollDice(g);
       g.populateTable();
         playerInfo.setText("Player 2's turn");
-    }
+    }//used to return all dice to unhighlighted when users turn is over
     private void unselectAll(){
         dice1.setSelected(false);
         dice2.setSelected(false);
         dice3.setSelected(false);
         dice4.setSelected(false);
         dice5.setSelected(false);
-    }
+    }//used in scramble dice and is what gets a random set of dice and then applies the icons to the buttons
     public void rollDice(Game game){
         
                 game.randomDice();
@@ -307,7 +304,7 @@ class YahtzeeGUI extends JFrame{
     }
     public JTable getTable(){
         return this.scorecard;
-    }
+    }//makes the dice appear to roll around, runs in a seperate thread so it doesnt interupt the game
     private void scrambleDice(Game g){
       Thread t = new Thread()
 {
@@ -327,7 +324,7 @@ class YahtzeeGUI extends JFrame{
 };
 t.start();
 
-    }
+    }//overrides the default togglebutton so that we could get rid of the borders and only show the dice icon
     private static final class JIconButton extends JToggleButton{
         private static final long serialVersionUID = 7274140930080397481L;
 
