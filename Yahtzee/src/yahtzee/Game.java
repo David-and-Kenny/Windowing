@@ -7,6 +7,9 @@
 package yahtzee;
 
 import java.awt.Dimension;
+import java.util.Arrays;
+import java.util.stream.IntStream;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -14,12 +17,30 @@ import java.awt.Dimension;
  */
 class Game {
     private boolean [][] selectedCells=new boolean[16][2];
+    private boolean [][] compareCells= {{true,true},
+        {true,true},
+        {true,true},
+        {true,true},
+        {true,true},
+        {true,true},
+        {true,true},
+        {true,true},
+        {true,true},
+        {true,true},
+        {true,true},
+        {true,true},
+        {true,true},
+        {true,true},
+        {true,true},
+        {false,false}};
+  
     private int rollsLeft=3;
     private int dice[]={1,2,3,4,5};
    private boolean p1Turn;//keeps track of whose turn it is
    private boolean scoreSelected=false;
     YahtzeeGUI gui;
     public Game(){
+        
     gui= new YahtzeeGUI(this);
       gui.setMinimumSize(new Dimension(425, 650));
       gui.setVisible(true);
@@ -69,14 +90,65 @@ class Game {
    public void setP1Turn(boolean a){
         this.p1Turn=a;
     }
+   public void gameOver(){
+       if(Arrays.deepEquals(selectedCells,compareCells)){
+           int player1Score= getScore(0);
+           int player2Score= getScore(1);
+          String winner= (player1Score>player2Score)? "Player 1" : "Player 2";
+           int response = JOptionPane.showConfirmDialog(gui,"Player1: "+ player1Score + " Player2: "+player2Score + "\n"+winner+" Wins!!!\n "
+                   + "Would you like to play again?", "Confirm",
+        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+    if (response == JOptionPane.NO_OPTION) {
+      System.out.println("No button clicked");
+    } else if (response == JOptionPane.YES_OPTION) {
+      restart();
+    } else if (response == JOptionPane.CLOSED_OPTION) {
+      System.out.println("JOptionPane closed");
+    }
+
+    
+       }else{
+           System.out.println("false");
+       }
+ }
+   private int getScore(int column){
+       int sum=0;
+       if(column == 0){
+           for(int i=7; i<16; i++){
+             sum += (Integer)gui.getTable().getValueAt(i, column+1);
+           }
+         
+       }
+        if(column == 1){
+           for(int i=7; i<16; i++){
+             sum += (Integer)gui.getTable().getValueAt(i, column+1);
+           }
+         
+       }
+      
+     return sum;
+   }
+   public void restart(){
+       selectedCells=new boolean[16][2];
+       setP1Turn(false);
+       clearTable();
+       gui.p1Turn(this);
+       clearTable();
+       resetRolls();
+       gui.getTable().repaint();
+   }
     public boolean getP1Turn(){
         return this.p1Turn;
     }//populates the scorecard with possible values that the user can choose
+    @SuppressWarnings("empty-statement")
+    
     public void populateTable(){
         int numCount[]={0,0,0,0,0,0,0};
         for(int i=0;i<5;i++){
             numCount[dice[i]]++;
+           
         }
+        
         int column= (p1Turn)? 1 : 2;
         //Score Singles
         for(int index=1;index<7;index++){
@@ -84,7 +156,7 @@ class Game {
             gui.getTable().setValueAt((index*numCount[index]), index, column);}
         }
       //3 of  akind
-        {
+        if(selectedCells[8][column-1]!=true){
         int count=0;
         boolean set=false;
 	for (int i=1; i<7; i++){
@@ -97,8 +169,9 @@ class Game {
 	
           if(count!=0)gui.getTable().setValueAt(count, 9, column);
         }
+        
         //4of a kind
-        {
+        if(selectedCells[9][column-1]!=true){
         int count=0;
         boolean set=false;
 	for (int i=1; i<7; i++){
@@ -111,20 +184,20 @@ class Game {
 	
           if(count!=0)gui.getTable().setValueAt(count, 10, column);
         }
+       
         //Full House
-        {
-        int arr[]=numCount;
+        if(selectedCells[10][column-1]!=true){
         int isSet=0;
         int score=0;
         for (int i=1; i<7; i++){
-	  if (arr[i] >= 3)
+	  if (numCount[i] >= 3)
 		 isSet = i; 
 	}
 	if (isSet > 0){
-		arr[isSet] = arr[isSet] - 3;
+		
 		isSet = 0;
 		for (int i=1; i<7; i++){
-		  if (arr[i] >= 2)
+		  if (numCount[i] == 2)
 		 	isSet = i; 
 		}
 		if (isSet > 0)
@@ -133,11 +206,36 @@ class Game {
 	}
         if(score!=0)gui.getTable().setValueAt(score, 11, column);  
          }
-    
-    
-    
-    
-    
+        //small straight
+        if(selectedCells[11][column-1]!=true){
+        for(int i=1; i<4; i++){
+            if(numCount[i]>0 && numCount[i+1]>0 && numCount[i+2]>0 && numCount[i+3]>0){
+                gui.getTable().setValueAt(30, 12, column);
+            }
+        }}
+        
+        //large straight
+        if(selectedCells[12][column-1]!=true){
+         for(int i=1; i<3; i++){
+            if(numCount[i]>0 && numCount[i+1]>0 && numCount[i+2]>0 && numCount[i+3]>0 && numCount[i+4]>0){
+                gui.getTable().setValueAt(40, 13, column);
+            }
+        }  }
+         //chance
+         if(selectedCells[13][column-1]!=true){int sum=0;
+       for(int i=0; i<5;i++){
+           sum+=dice[i];
+       }
+       gui.getTable().setValueAt(sum,14,column);
+    }
+         
+         if(selectedCells[14][column-1]!=true){
+            for(int i=1; i<7; i++){
+                if(numCount[i]==5){
+                    gui.getTable().setValueAt(50, 15, column);
+                }
+            }}
+   
     
     }
     

@@ -138,6 +138,7 @@ class YahtzeeGUI extends JFrame{
             }else{
                 p1Turn(game);
             }
+            game.gameOver();
             }
         };//allows user to select from the populated table a score which they would like to set
         scorecard.addMouseListener(new MouseAdapter() {
@@ -146,9 +147,12 @@ class YahtzeeGUI extends JFrame{
                 JTable target = (JTable)e.getSource();
                 int row = target.getSelectedRow();
                 int column = target.getSelectedColumn();
-                if(row>0&&column>0&&scorecard.getValueAt(row, column)!=""){
+              /*change this  if(row>0&&column>0&&scorecard.getValueAt(row, column)!="")*/{
                 boolean a=confirmation();
                 if(a){
+                    if(row>0&&column>0&&scorecard.getValueAt(row, column)==""){
+                        target.setValueAt(0, row, column);
+                    }
                     game.getCellArray()[row-1][column-1]=true;
                     scorecard.getSelectionModel().clearSelection();
                     scorecard.repaint();
@@ -159,8 +163,9 @@ class YahtzeeGUI extends JFrame{
                     }else{
                         p1Turn(game);
                     }
+                    sumAndBonus(game);
                 }
-                else System.out.println(false);
+                
               }}
             }
           });
@@ -326,6 +331,25 @@ class YahtzeeGUI extends JFrame{
 t.start();
 
     }//overrides the default togglebutton so that we could get rid of the borders and only show the dice icon
+    private void sumAndBonus(Game g){
+        int j= (g.getP1Turn())? 2 : 1;
+        
+            int score=0;
+        for(int i=1;i<7;i++){
+            if(scorecard.getValueAt(i,j)!=""){
+            score+=(Integer)scorecard.getValueAt(i, j);
+        }}
+        scorecard.setValueAt(score, 7, j);
+        g.getCellArray()[6][j-1]=true;
+        if(score>63){
+            scorecard.setValueAt(35, 8, j);
+            g.getCellArray()[7][j-1]=true;
+        }else{
+            scorecard.setValueAt(0, 8, j);
+            g.getCellArray()[7][j-1]=true;
+        }
+        
+    }
     private static final class JIconButton extends JToggleButton{
         private static final long serialVersionUID = 7274140930080397481L;
 
@@ -340,5 +364,6 @@ t.start();
             setBorder(BorderFactory.createEmptyBorder());
         }
     }
+   
 }
 

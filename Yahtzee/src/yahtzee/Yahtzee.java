@@ -16,9 +16,7 @@ public class Yahtzee {
      */
     public static void main(String[] args) {
       Game game= new Game();
-          System.out.println("please ohfsdft this worwerwerwerk");
-          System.out.println("ermaghelkjhlkjlkjkjlrd");
-          System.out.println("oh snapqweqweqweqweqweqweqweqwe.");
+
     }
 
     }
