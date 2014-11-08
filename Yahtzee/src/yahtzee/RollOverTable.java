@@ -40,6 +40,7 @@ public class RollOverTable extends JTable {
     //This is what is actually rendering the table.
     //It renders each cell individually so the logic inside tells how to
     //format the cells
+    @Override
     public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
         Component c = super.prepareRenderer(renderer, row, column);
        

@@ -8,7 +8,6 @@ package yahtzee;
 
 import java.awt.Dimension;
 import java.util.Arrays;
-import java.util.stream.IntStream;
 import javax.swing.JOptionPane;
 
 /**
@@ -105,9 +104,7 @@ class Game {
     } else if (response == JOptionPane.CLOSED_OPTION) {
       System.out.println("JOptionPane closed");
     }
-}else{
-           System.out.println("false");
-       }
+}
  }
    private int getScore(int column){
        int sum=0;
