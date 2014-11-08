@@ -164,6 +164,7 @@ class YahtzeeGUI extends JFrame{
                         p1Turn(game);
                     }
                     sumAndBonus(game);
+                    game.gameOver();
                 }
                 
               }}
@@ -283,12 +284,15 @@ class YahtzeeGUI extends JFrame{
         g.setP1Turn(true);
         unselectAll();
         scrambleDice(g);
+        g.minusRoll();
+        
         playerInfo.setText("Player 1's turn");
     }//signals the start of player 2's turn
     public void p2Turn(Game g){
       g.setP1Turn(false); 
       unselectAll();
       scrambleDice(g);
+      g.minusRoll();
         playerInfo.setText("Player 2's turn");
     }//used to return all dice to unhighlighted when users turn is over
     private void unselectAll(){
@@ -351,8 +355,6 @@ t.start();
         
     }
     private static final class JIconButton extends JToggleButton{
-        private static final long serialVersionUID = 7274140930080397481L;
-
         public JIconButton(){
             Dimension d= new Dimension(105,105);
             //super(UIManager.getIcon("OptionPane.informationIcon"));

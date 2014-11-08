@@ -76,6 +76,9 @@ public class RollOverTable extends JTable {
         if(row==0 || column ==0){
             c.setForeground(Color.BLACK);
         }
+        if((row==0 && column==1 && game.getP1Turn())||(row==0 && column==2 && !game.getP1Turn())){
+            c.setBackground(Color.RED);
+        }
         
         return c;
     }

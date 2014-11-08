@@ -99,7 +99,7 @@ class Game {
                    + "Would you like to play again?", "Confirm",
         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
     if (response == JOptionPane.NO_OPTION) {
-      System.out.println("No button clicked");
+      System.exit(0);
     } else if (response == JOptionPane.YES_OPTION) {
       restart();
     } else if (response == JOptionPane.CLOSED_OPTION) {
