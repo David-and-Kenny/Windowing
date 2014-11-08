@@ -105,9 +105,7 @@ class Game {
     } else if (response == JOptionPane.CLOSED_OPTION) {
       System.out.println("JOptionPane closed");
     }
-
-    
-       }else{
+}else{
            System.out.println("false");
        }
  }

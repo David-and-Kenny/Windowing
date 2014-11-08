@@ -147,7 +147,7 @@ class YahtzeeGUI extends JFrame{
                 JTable target = (JTable)e.getSource();
                 int row = target.getSelectedRow();
                 int column = target.getSelectedColumn();
-              /*change this  if(row>0&&column>0&&scorecard.getValueAt(row, column)!="")*/{
+              if((column==1 && game.getP1Turn())|| column==2 && !game.getP1Turn()){
                 boolean a=confirmation();
                 if(a){
                     if(row>0&&column>0&&scorecard.getValueAt(row, column)==""){
